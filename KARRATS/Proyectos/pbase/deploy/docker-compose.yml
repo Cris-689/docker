@@ -1,7 +1,7 @@
 services:
   web:
     build: 
-      context: /home/cristian/HLC/Docker/KARRATS
+      context: /home/cristian/HLC/docker/KARRATS
       dockerfile: ./dockerfiles/base/ubbase
       #args: #variables en DFILE para la construccion (build) de la imagen
       #  - USUARIO=alfonso
