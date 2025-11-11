@@ -1,9 +1,10 @@
 services:
   web:
     build: 
-      context: /home/cristian/HLC/docker/KARRATS
+      context: /home/cristian/devops/HLC/Docker/Caronte
       dockerfile: ./dockerfiles/base/ubbase
-      args: #variables en DFILE para la construccion (build) de la imagen
-        - USUARIO=pepe
-        - PASSWORD=1234
+      #args: #variables en DFILE para la construccion (build) de la imagen
+      #  - USUARIO=alfonso
     container_name: ctpbase
+    environment:
+      - USUARIO=alfonso

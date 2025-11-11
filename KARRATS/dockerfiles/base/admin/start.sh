@@ -1,5 +1,18 @@
 #!/bin/bash
+# carga las variables de entono pasadas desde el D.Compose
+set -e
 
-# encargada de dejar este contenedor vivo en backgound
-tail -f /dev/null
-## script's que se encargar de configurar el imagen/contenedor
+newUser(){
+    useradd -rm -d /home/${USUARIO} -s /bin/bash ${USUARIO}
+    echo "${USUARIO}:1234" | chpasswd
+    echo "Bienvenido ${USUARIO} a tu empresa ..." > /home/${USUARIO}/bienvenida.txt
+}
+
+main() {
+    newUser
+    # encargada de dejar este contendor vivo en BGround
+    tail -f /dev/null
+    ## script's que se encargar de configurar el imagen/contenedor
+}
+
+main
