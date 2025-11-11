@@ -8,3 +8,4 @@ services:
     container_name: ctpbase
     environment:
       - USUARIO=alfonso
+      - PASSWORD=Usuario
