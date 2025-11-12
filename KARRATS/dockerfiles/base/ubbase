@@ -16,7 +16,7 @@ WORKDIR /root/admin/base
 # 1 . --> realtivo a la ruta del contexto (Caronte) en el docker-compose-yml del proyectbase
 # docker compose up -d --build
 # 2 . --> workdir dentro del contenedor
-COPY ./dockerfiles/base/admin/start.sh .
+COPY ./dockerfiles/base/admin .
 RUN chmod +x ./start.sh
 
 
