@@ -1,26 +1,17 @@
 FROM ubuntu
 
+# porque carajo no va?
+# RUN apt update && apt install -yq --no-install-recommends \
+#      nano \
+#      git curl  wget \
+#      iputils-ping net-tools \ 
+#      sudo
 
-RUN apt update && apt install -yq --no-install-recommends \
-     nano \
-     git curl  wget \
-     iputils-ping net-tools \ 
-     sudo
-
-# copiar los script's del entrypoint (sc ppal ---> otrs sc' personalizadas)
+# copiar los script's del entrypoint
 RUN mkdir -p /root/admin/base
 WORKDIR /root/admin/base
-# 1 . --> relativo al directorio (base) donde se encuentra ubbase --> docker build 
-# COPY ./admin/start.sh .
 
-# 1 . --> realtivo a la ruta del contexto (Caronte) en el docker-compose-yml del proyectbase
-# docker compose up -d --build
-# 2 . --> workdir dentro del contenedor
 COPY ./dockerfiles/base/admin .
 RUN chmod +x ./start.sh
-
-
-# el primer comando que use el contenedor para mantenerse vivo
-#CMD ["tail", "-f", "/dev/null"]
 
 ENTRYPOINT [ "./start.sh" ]
