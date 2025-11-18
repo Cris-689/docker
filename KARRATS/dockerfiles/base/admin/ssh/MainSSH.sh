@@ -3,6 +3,9 @@
 set -e
 
 make_ssh(){
-    sed -i 's/#Port 22/Port '"${SSH_PORT}"' /etc/ssh/sshd_config'
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+    # cambiar puerto ssh
+    sed -i "s/#Port 22/Port ${SSH_PORT}/g" /etc/ssh/sshd_config
+    # permitir login con password
+    sed -i "s/PasswordAuthentication no/PasswordAuthentication yes/g" /etc/ssh/sshd_config
 }
+    
