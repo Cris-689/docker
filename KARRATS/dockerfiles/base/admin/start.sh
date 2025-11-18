@@ -8,7 +8,7 @@ source /root/admin/base/ssh/MainSSH.sh
 main() {
     newUser
     if [ "$?" -eq 0 ]; then
-        MainSSH
+        Make_ssh
     fi
     #encargada de dejar este contendor vivo en BGround
     tail -f /dev/null
