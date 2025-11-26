@@ -12,10 +12,13 @@ checkUsuario(){
     fi
 }
 checkHome(){
-    if [ ! -d "/home/${USUARIO}" ]; then
-        return 0
+    if [ ! -d "/home/${USUARIO}" ]
+    then
+        echo "/home/${USUARIO} no existe" >> /root/logs/informe.log
+        return 0 #true
     else
-        return 1
+        echo "/home/${USUARIO} existe" >> /root/logs/informe.log
+        return 1 #false
     fi
 }
 newUser(){

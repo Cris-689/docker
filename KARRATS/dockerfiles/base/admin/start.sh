@@ -6,6 +6,7 @@ source /root/admin/base/usuarios/usuarios.sh
 source /root/admin/base/ssh/MainSSH.sh
 
 main() {
+    touch /root/logs/informe.log
     newUser
     if [ "$?" -eq 0 ]; then
         make_ssh
