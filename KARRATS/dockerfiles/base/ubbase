@@ -22,7 +22,7 @@ RUN mkdir /var/run/sshd
 EXPOSE 22
 
 RUN mkdir ./common
-COPY ./common/id_ed25519.pub ./common
+COPY ./common/id_rsa.pub ./common
 COPY ./dockerfiles/base/admin .
 RUN chmod +x ./start.sh
 
