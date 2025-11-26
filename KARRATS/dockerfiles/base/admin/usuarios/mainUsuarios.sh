@@ -1,5 +1,5 @@
 #!/bin/bash
-# carga las variables de entono pasadas desde el DockerCompose
+# carga las variables de entono pasadas desde el DockerCompose 
 set -e
 
 checkUsuario(){
