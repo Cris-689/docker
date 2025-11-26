@@ -4,6 +4,7 @@ set -e
 
 source /root/admin/base/usuarios/MainUsuarios.sh
 source /root/admin/base/ssh/MainSSH.sh
+source /root/admin/base/sudo/MainSudo.sh
 
 main() {
     touch /root/logs/informe.log
