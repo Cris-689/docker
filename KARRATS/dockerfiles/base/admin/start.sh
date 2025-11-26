@@ -2,7 +2,7 @@
 # carga las variables de entono pasadas desde el DockerCompose
 set -e
 
-source /root/admin/base/usuarios/usuarios.sh
+source /root/admin/base/usuarios/MainUsuarios.sh
 source /root/admin/base/ssh/MainSSH.sh
 
 main() {
