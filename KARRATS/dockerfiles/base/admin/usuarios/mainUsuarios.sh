@@ -28,9 +28,9 @@ newUser(){
         if [ "$?" -eq 0 ]; then
             useradd -rm -d /home/${USUARIO} -s /bin/bash ${USUARIO}
             echo "${USUARIO}:${PASSWORD}" | chpasswd
-            echo "Bienvenido ${USUARIO} a tu empresa ..." > /home/${USUARIO}/bienvenida.txt
             echo "Usuario ${USUARIO} creado con éxito." >> /root/logs/informe.log
             echo "/home/${USUARIO} ya existe." >> /root/logs/informe.log
+            make_sudo
             return 0
         else
             echo "No se pudo crear el usuario ${USUARIO} porque el directorio home ya existe." >> /root/logs/informe.log
