@@ -5,7 +5,7 @@ services:
       #args: #variables en dockerfile para la construcción de la imagen
       #  - USUARIO=pedro
       dockerfile: ./dockerfiles/base/ubbase
-      image: cristian/ubbase
+    #image: cristian/ubbase
     container_name: ${CONTENEDOR}
     ports:
       - "${SSH_PORT}:${SSH_PORT}"
