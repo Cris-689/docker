@@ -11,5 +11,5 @@ make_ssh(){
     mkdir -p /home/${USUARIO}/.ssh
    # cp /root/admin/base/common/id_ed25519.pub /home/${USUARIO}/.ssh
     cat /root/admin/base/common/id_rsa.pub >> /home/${USUARIO}/.ssh/authorized_keys
-    exec /usr/sbin/sshd
+    service ssh start
 }

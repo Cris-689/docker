@@ -1,0 +1,30 @@
+services:
+  web:
+    # Indicamos la imagen exacta que queremos descargar y ejecutar desde Docker Hub.
+    image: uzbuzbiz/ubnginx:latest
+
+    container_name: ${CONTENEDOR}
+    
+    ports:
+      # Puerto SSH (definido en .env)
+      - "${SSH_PORT}:${SSH_PORT}"
+      
+      # Accederás a la web via http://localhost:8080 (o la IP definida)
+      - "8080:80"
+
+    env_file:
+      - ./.env
+      
+    volumes:
+      - ./logs:/root/logs
+
+    networks:
+      netkarrats:
+          ipv4_address: ${IP}
+
+networks:
+  netkarrats:
+    ipam:
+      driver: default
+      config:
+        - subnet: ${SUBNET}

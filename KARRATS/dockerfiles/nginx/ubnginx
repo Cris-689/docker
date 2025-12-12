@@ -1,0 +1,17 @@
+# 1. Heredamos de la imagen base (la que ya tiene usuarios, ssh, etc.)
+FROM uzbuzbiz/ubbase:latest 
+
+# 2. Instalamos SOLO Nginx (lo demás ya viene en la base)
+RUN apt update && apt install -yq --no-install-recommends \
+    nginx
+
+# 3. Exponemos el puerto 80 (el 22 ya está expuesto en la base)
+EXPOSE 80
+
+# 4. Copiamos el NUEVO script de arranque y lo marcamos como ejecutable
+# Esto sobrescribirá el ./start.sh que existía en /root/admin/base
+COPY ./dockerfiles/nginx/start.sh .
+RUN chmod +x ./start.sh
+
+# 5. El Entrypoint sigue siendo el mismo fichero, pero ahora tiene contenido nuevo
+ENTRYPOINT [ "./start.sh" ]

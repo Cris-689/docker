@@ -1,11 +1,15 @@
 services:
   web:
-    build: 
-      context: ${CONTEXTO}
-      #args: #variables en dockerfile para la construcción de la imagen
-      #  - USUARIO=pedro
-      dockerfile: ./dockerfiles/base/ubbase
-    #image: cristian/ubbase
+    # Comentamos la construcción local para no depender de los archivos del disco
+    # build: 
+    #   context: ${CONTEXTO}
+    #   #args: #variables en dockerfile para la construcción de la imagen
+    #   #  - USUARIO=pedro
+    #   dockerfile: ./dockerfiles/base/ubbase
+
+    # Indicamos que descargue y use la imagen base desde Docker Hub
+    image: uzbuzbiz/ubbase
+
     container_name: ${CONTENEDOR}
     ports:
       - "${SSH_PORT}:${SSH_PORT}"

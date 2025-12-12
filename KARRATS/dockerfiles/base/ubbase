@@ -1,33 +1,52 @@
 FROM ubuntu
 
-
+# ---------------------------------------------------------------------------
+# 1. INSTALACIÓN DE PAQUETES
+# Instalamos herramientas básicas de red, edición y el servidor SSH.
+# ---------------------------------------------------------------------------
 RUN apt update && apt install -yq --no-install-recommends \
      nano \
-     git curl  wget \
+     git curl wget \
      iputils-ping net-tools \ 
      sudo \
      openssh-server \
      ca-certificates
 
-# copiar los script's del entrypoint (sc ppal ---> otrs sc' personalizadas)
+# ---------------------------------------------------------------------------
+# 2. PREPARACIÓN DEL DIRECTORIO DE TRABAJO
+# Creamos la carpeta donde alojaremos los scripts de administración.
+# ---------------------------------------------------------------------------
 RUN mkdir -p /root/admin/base
 WORKDIR /root/admin/base
-# 1 . --> relativo al directorio (base) donde se encuentra ubbase --> docker build 
-# COPY ./admin/start.sh .
 
-# 1 . --> realtivo a la ruta del contexto (Caronte) en el docker-compose-yml del proyectbase
-# docker compose up -d --build
-# 2 . --> workdir dentro del contenedor
+# Directorio necesario para que el servicio SSH funcione correctamente.
 RUN mkdir /var/run/sshd
 EXPOSE 22
 
+# ---------------------------------------------------------------------------
+# 3. COPIA DE ARCHIVOS (IMPORTANTE: CONTEXTO DE BUILD)
+#
+# Nota sobre las rutas en COPY:
+# Aunque este Dockerfile está en /dockerfiles/base/, el docker-compose define
+# el "build context" en la raíz del proyecto (carpeta KARRATS).
+# Por eso debemos indicar la ruta completa desde la raíz del proyecto.
+# ---------------------------------------------------------------------------
+
+# Copiamos la clave pública SSH a una carpeta común dentro del contenedor
 RUN mkdir ./common
 COPY ./common/id_rsa.pub ./common
+
+# Copiamos los scripts de administración (start.sh, usuarios, ssh, sudo)
+# Origen: ./dockerfiles/base/admin (Ruta desde la raíz del proyecto)
+# Destino: . (El WORKDIR actual: /root/admin/base)
 COPY ./dockerfiles/base/admin .
+
+# Damos permisos de ejecución al script principal
 RUN chmod +x ./start.sh
 
-
-# el primer comando que ejecuta el contenedor para mantenerse vivo
-#CMD ["tail", "-f", "/dev/null"]
-
+# ---------------------------------------------------------------------------
+# 4. PUNTO DE ENTRADA (ENTRYPOINT)
+# ---------------------------------------------------------------------------
+# Este script se ejecutará cada vez que arranque el contenedor.
+# Se encarga de: crear usuario, configurar SSH y mantener el contenedor vivo.
 ENTRYPOINT [ "./start.sh" ]
