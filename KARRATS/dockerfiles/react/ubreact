@@ -2,11 +2,11 @@ FROM node:20 AS builder
 WORKDIR /app
 # Copiamos el package.json y package-lock.json primero
 # Ruta ajustada a donde esta el código React
-COPY ./Proyectos/pokeminos/package*.json ./
+COPY ./Proyectos/${NOMBRE_PROYECTO}/package*.json ./
 # Instalamos dependencias
 RUN npm install
 # Copiamos el resto del código fuente
-COPY ./Proyectos/pokeminos/ .
+COPY ./Proyectos/${NOMBRE_PROYECTO}/ .
 # Compilamos (generamos carpeta dist o build)
 RUN npm run build
 

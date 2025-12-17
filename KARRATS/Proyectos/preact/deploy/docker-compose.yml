@@ -1,27 +1,24 @@
 services:
   web:
-    # Usamos la imagen que construiste y subiste con la etiqueta 'latest'.
-    # Esta imagen ya contiene: Ubuntu + Nginx + Tu Web React Compilada.
-    image: uzbuzbiz/ubreact:latest
+    image: uzbuzbiz/ubreact:${NOMBRE_PROYECTO}
+
+    # 2. Configuración de Construcción
+    build:
+      context: ${CONTEXTO}  # La raíz de KARRATS
+      dockerfile: ./dockerfiles/react/ubreact
+      
+      # Pasamos la variable del .env (derecha) al ARG del Dockerfile (izquierda)
+      args:
+        - NOMBRE_PROYECTO=${NOMBRE_PROYECTO}
 
     container_name: ${CONTENEDOR}
-    
     ports:
-      # Puerto SSH (para entrar como 'paco')
       - "${SSH_PORT}:${SSH_PORT}"
-      
-      # Puerto Web (para ver la App React)
-      # Mapeamos el 8081 de tu PC al 80 del contenedor (donde escucha Nginx)
       - "8081:80"
-
     env_file:
       - ./.env
-      
     volumes:
-      # Solo necesitamos persistir los logs.
-      # NO hace falta montar el código fuente (- ./mi_proyecto:/...) porque ya está dentro.
       - ./logs:/root/logs
-
     networks:
       netkarrats:
           ipv4_address: ${IP}
