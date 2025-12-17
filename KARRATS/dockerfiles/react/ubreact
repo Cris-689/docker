@@ -1,0 +1,27 @@
+FROM node:20 AS builder
+WORKDIR /app
+# Copiamos el package.json y package-lock.json primero
+# Ruta ajustada a donde esta el código React
+COPY ./Proyectos/pokeminos/package*.json ./
+# Instalamos dependencias
+RUN npm install
+# Copiamos el resto del código fuente
+COPY ./Proyectos/pokeminos/ .
+# Compilamos (generamos carpeta dist o build)
+RUN npm run build
+
+# Heredamos de ubnginx (que ya tiene Nginx, usuarios y SSH)
+FROM uzbuzbiz/ubnginx:latest
+# Copiamos los archivos COMPILADOS de la etapa anterior (builder)
+# Nota: Vite usa 'dist', Create-React-App usa 'build'.
+COPY --from=builder /app/dist /var/www/MiWeb
+
+# Configuración de Nginx
+RUN rm /etc/nginx/sites-enabled/default
+COPY ./dockerfiles/react/mi_sitio.conf /etc/nginx/conf.d/default.conf
+
+# Copiamos el script de arranque
+COPY ./dockerfiles/react/start.sh .
+RUN chmod +x ./start.sh
+
+ENTRYPOINT [ "./start.sh" ]
