@@ -1,4 +1,5 @@
 FROM node:20 AS builder
+ARG NOMBRE_PROYECTO
 WORKDIR /app
 # Copiamos el package.json y package-lock.json primero
 # Ruta ajustada a donde esta el código React
