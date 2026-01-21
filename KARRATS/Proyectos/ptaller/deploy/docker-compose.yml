@@ -1,0 +1,17 @@
+services:
+  web-taller:
+    build: 
+      context: ..
+      dockerfile: ./deploy/dockerfile
+      args:
+        - PROYECTO=${PROYECTO}
+        - USUARIO=${USUARIO}
+        - TIPO=${TIPO}
+    container_name: web_taller
+    image: uzbuzbiz/webtallerclase
+    hostname: web_taller
+    ports:
+      - "80:80"
+    env_file:
+      - ./.env
+    
